@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BGI ERP - Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</head>
+<body>
+  <!-- Header Section -->
+ <header class="top-header" style="display:flex; justify-content: space-between; align-items:center; padding:10px 20px; background:#000000; color:#fff;">
+  <div class="left-section" style="display:flex; align-items:center; gap:10px;">
+    <img src="Picsart_25-09-30_21-14-45-613.png" alt="BGI Logo" class="logo" style="height:40px;">
+    <span class="title" style="font-size:20px; font-weight:bold;">BGI ERP</span>
+  </div>
+
+  <!-- 🔹 Right Section -->
+  <div class="right-section" style="display:flex; align-items:center; gap:20px;">
+    <span id="welcomeMessage" style="font-size:14px;"></span>
+    
+    <!-- Modern Logout Button -->
+    <button onclick="logout()" class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+</header>
+
+
+ 
+ <!-- Student buttom -->
+    <div class="card">
+      <div class="card-title" style="text-align: center;">BGI (Student's Portal)</div>
+
+  <div class="container">
+  <div class="overlay"></div>
+
+  <div class="dashboard">
+     <div class="card">
+    <h4 class="card-title" style="text-align: left;">Main Dashboard</h4>
+    <h2>Welcome, <span id="studentName"></span> 👋</h2>
+    <p style="text-align:center; color:#444;">Buddha Group of Institutions | Gorakhpur</p>
+
+    <div class="links">
+      <a class="link-box" href="my-profile.html">
+        <i class="fa-solid fa-user"></i>
+        <h4>My Profile</h4>
+        <p>View your personal details</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-key"></i>
+        <h4>Change Password</h4>
+        <p>Update your login password</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-calendar-check"></i>
+        <h4>Attendance</h4>
+        <p>Check your attendance record</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-landmark"></i>
+        <h4>Account Details</h4>
+        <p>Update your bank details</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-download"></i>
+        <h4>Admit Card</h4>
+        <p>Download exam admit card</p>
+      </a>
+      <a class="link-box" href="abc-id.html">
+        <i class="fa-solid fa-id-badge"></i>
+        <h4>ABC ID</h4>
+        <p>Update Academic Bank of Credits ID</p>
+      </a>
+      <a class="link-box" href="online-attendance.html">
+        <i class="fa-solid fa-camera"></i>
+        <h4>Online Attendance</h4>
+        <p>Mark your presence online</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <h4>Pay Fee</h4>
+        <p>Pay your annual/semester fee</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-calendar-check"></i>
+        <h4>Holiday calender</h4>
+        <p>Cheak holiday calender</p>
+      </a>
+      <a class="link-box" href="#">
+        <i class="fa-solid fa-book"></i>
+        <h4>Projects</h4>
+        <p>Submit your project details</p>
+      </a>
+       <a class="link-box" href="#">
+        <i class="fa-solid fa-book"></i>
+        <h4>Assignment</h4>
+        <p>Check Assignment  details</p>
+      </a>
+    </div>
+
+    
+  </div>
+
+  
+  <script>
+  const userData = localStorage.getItem("currentUser");
+  const login = localStorage.getItem("isLoggedIn");
+
+  if (login !== "true" || !userData) {
+    window.location.href = "student-login.html";
+  } 
+  else {
+    const user = JSON.parse(userData);  // Convert JSON to object
+
+    document.getElementById("studentName").textContent = user.name;
+    document.getElementById("welcomeMessage").textContent = `${user.name} | Roll: ${user.roll}`;
+  }
+
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("currentUser");
+    window.location.href = "student-login.html";
+  }
+</script>
+
+</body>
+</html>

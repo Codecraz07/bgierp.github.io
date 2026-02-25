@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Registration - BGI ERP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="center-container">
+    <div class="login-card">
+      <div class="logo">
+        <img src="Picsart_25-09-30_21-14-45-613.png" alt="BGI Logo">
+      </div>
+      <h2>Faculty Registration</h2>
+      <p class="colleg-name">Buddha Group of Institutions</p>
+
+      <form class="login-form" onsubmit="registerFaculty(event)">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="text" id="facultyId" placeholder="Faculty ID" required>
+        <input type="email" id="email" placeholder="Email ID" required>
+        <input type="password" id="password" placeholder="Create Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button type="submit">Register</button>
+      </form>
+
+      <p class="forgot-line">
+        Already registered? <a href="faculty-login.html">Login here</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function registerFaculty(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const facultyId = document.getElementById("facultyId").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Get existing faculty list
+      let allFaculty = JSON.parse(localStorage.getItem("allFaculty")) || [];
+
+      // Check if email or facultyId already exists
+      const exists = allFaculty.some(f => f.email === email || f.facultyId === facultyId);
+      if (exists) {
+        alert("Faculty with this email or ID already exists!");
+        return;
+      }
+
+      const faculty = { name, facultyId, email, password };
+      allFaculty.push(faculty);
+
+      // Save updated list
+      localStorage.setItem("allFaculty", JSON.stringify(allFaculty));
+
+      alert("Registration successful! Please login now.");
+      window.location.href = "faculty-login.html";
+    }
+  </script>
+</body>
+</html>
