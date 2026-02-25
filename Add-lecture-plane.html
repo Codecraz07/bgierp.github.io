@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lecture Plan - BGI ERP</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FONT AWESOME -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+
+  <!-- EXCEL EXPORT LIBRARY -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+    }
+
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background: #000;
+      color: #fff;
+      align-items: center;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .input-group input,
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    .btn-add {
+      background: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-small {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-bar {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th,
+    table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .pagination {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      margin: 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #333;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="top-header">
+    <h2>BGI ERP - Lecture Plan</h2>
+
+    <button onclick="window.print()" class="btn-small" style="background:#ff9800;color:#fff;">
+      <i class="fas fa-print"></i> Print PDF
+    </button>
+  </header>
+
+  <div class="main">
+
+    <div class="container">
+
+      <!-- FORM -->
+      <div class="card">
+        <div class="card-title">Lecture Plan Form</div>
+
+        <input type="hidden" id="editIndex">
+
+        <div class="input-group">
+          <label>Subject Name</label>
+          <input type="text" id="subjectName">
+        </div>
+
+        <div class="input-group">
+          <label>Subject Code</label>
+          <input type="text" id="subjectCode">
+        </div>
+
+        <div class="input-group">
+          <label>Section</label>
+          <input type="text" id="section">
+        </div>
+
+        <div class="input-group">
+          <label>Lecture No</label>
+          <input type="number" id="lectureNo">
+        </div>
+
+        <div class="input-group">
+          <label>Topic</label>
+          <input type="text" id="topic">
+        </div>
+
+        <div class="input-group">
+          <label>Chapter Name</label>
+          <input type="text" id="chapterName">
+        </div>
+
+        <div class="input-group">
+          <label>Date</label>
+          <input type="date" id="date">
+        </div>
+
+        <div class="input-group">
+          <label>Start Time</label>
+          <input type="time" id="startTime">
+        </div>
+
+        <div class="input-group">
+          <label>End Time</label>
+          <input type="time" id="endTime">
+        </div>
+
+        <div class="input-group">
+          <label>Teaching Method</label>
+          <select id="teachingMethod">
+            <option value="">Select Method</option>
+            <option>Chalk & Talk</option>
+            <option>PPT</option>
+            <option>Video Lecture</option>
+            <option>Group Discussion</option>
+            <option>Activity Based</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Faculty Name</label>
+          <input type="text" id="facultyName">
+        </div>
+
+        <div class="input-group">
+          <label>Faculty ID</label>
+          <input type="text" id="facultyId">
+        </div>
+
+        <div class="input-group">
+          <label>PPT/PDF File</label>
+          <input type="file" id="fileUpload">
+        </div>
+
+        <div class="input-group">
+          <label>Remarks</label>
+          <input type="text" id="remarks">
+        </div>
+
+        <button class="btn-add" onclick="saveLecture()">Save Lecture Plan</button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card">
+        <div class="card-title">Lecture Plan List</div>
+
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search topic, subject, date..."
+          onkeyup="searchLecture()">
+
+        <button onclick="exportExcel()" class="btn-small" style="background:blue;color:white;">
+          Export to Excel
+        </button>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Lecture</th>
+              <th>Subject</th>
+              <th>Topic</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Method</th>
+              <th>File</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody id="lectureTable"></tbody>
+        </table>
+
+        <div class="pagination" id="pagination"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    let currentPage = 1;
+    let rowsPerPage = 5;
+
+    function saveLecture() {
+
+      let lec = {
+        subjectName: subjectName.value,
+        subjectCode: subjectCode.value,
+        section: section.value,
+        lectureNo: lectureNo.value,
+        topic: topic.value,
+        chapterName: chapterName.value,
+        date: date.value,
+        startTime: startTime.value,
+        endTime: endTime.value,
+        teachingMethod: teachingMethod.value,
+        facultyName: facultyName.value,
+        facultyId: facultyId.value,
+        file: fileUpload.files[0] ? fileUpload.files[0].name : "No File",
+        remarks: remarks.value
+      };
+
+      for (let k in lec) {
+        if (!lec[k]) {
+          alert("Please fill all fields!");
+          return;
+        }
+      }
+
+      let data = JSON.parse(localStorage.getItem("lecturePlan")) || [];
+      let editIndex = document.getElementById("editIndex").value;
+
+      if (editIndex !== "") {
+        data[editIndex] = lec;
+        document.getElementById("editIndex").value = "";
+      } else {
+        data.push(lec);
+      }
+
+      localStorage.setItem("lecturePlan", JSON.stringify(data));
+
+      alert("Lecture Plan Saved!");
+      loadLectures();
+      clearForm();
+    }
+
+    function clearForm() {
+      document.querySelectorAll("input, select").forEach(el => el.value = "");
+    }
+
+    function loadLectures() {
+      let data = JSON.parse(localStorage.getItem("lecturePlan")) || [];
+      let tbody = document.getElementById("lectureTable");
+
+      tbody.innerHTML = "";
+
+      let start = (currentPage - 1) * rowsPerPage;
+      let end = start + rowsPerPage;
+
+      let paginated = data.slice(start, end);
+
+      paginated.forEach((lec, i) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${lec.lectureNo}</td>
+            <td>${lec.subjectName}</td>
+            <td>${lec.topic}</td>
+            <td>${lec.date}</td>
+            <td>${lec.startTime} - ${lec.endTime}</td>
+            <td>${lec.teachingMethod}</td>
+            <td>${lec.file}</td>
+            <td>
+              <button class="btn-small" style="background:orange;color:white;" onclick="editLecture(${i + start})">Edit</button>
+              <button class="btn-small" style="background:red;color:white;" onclick="deleteLecture(${i + start})">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      paginationButtons(data.length);
+    }
+
+    function editLecture(i) {
+      let data = JSON.parse(localStorage.getItem("lecturePlan"));
+      let lec = data[i];
+
+      subjectName.value = lec.subjectName;
+      subjectCode.value = lec.subjectCode;
+      section.value = lec.section;
+      lectureNo.value = lec.lectureNo;
+      topic.value = lec.topic;
+      chapterName.value = lec.chapterName;
+      date.value = lec.date;
+      startTime.value = lec.startTime;
+      endTime.value = lec.endTime;
+      teachingMethod.value = lec.teachingMethod;
+      facultyName.value = lec.facultyName;
+      facultyId.value = lec.facultyId;
+      remarks.value = lec.remarks;
+
+      document.getElementById("editIndex").value = i;
+    }
+
+    function deleteLecture(i) {
+      let data = JSON.parse(localStorage.getItem("lecturePlan"));
+      data.splice(i, 1);
+      localStorage.setItem("lecturePlan", JSON.stringify(data));
+      loadLectures();
+    }
+
+    function searchLecture() {
+      let search = document.getElementById("searchInput").value.toLowerCase();
+      let data = JSON.parse(localStorage.getItem("lecturePlan")) || [];
+
+      let filtered = data.filter(l =>
+        l.topic.toLowerCase().includes(search) ||
+        l.subjectName.toLowerCase().includes(search) ||
+        l.date.includes(search)
+      );
+
+      showFilteredTable(filtered);
+    }
+
+    function showFilteredTable(data) {
+      let tbody = document.getElementById("lectureTable");
+      tbody.innerHTML = "";
+
+      data.forEach((lec, i) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${lec.lectureNo}</td>
+            <td>${lec.subjectName}</td>
+            <td>${lec.topic}</td>
+            <td>${lec.date}</td>
+            <td>${lec.startTime} - ${lec.endTime}</td>
+            <td>${lec.teachingMethod}</td>
+            <td>${lec.file}</td>
+            <td>
+              <button class="btn-small" style="background:orange;color:white;" onclick="editLecture(${i})">Edit</button>
+              <button class="btn-small" style="background:red;color:white;" onclick="deleteLecture(${i})">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function exportExcel() {
+      let data = JSON.parse(localStorage.getItem("lecturePlan")) || [];
+      let ws = XLSX.utils.json_to_sheet(data);
+      let wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Lecture Plan");
+      XLSX.writeFile(wb, "LecturePlan.xlsx");
+    }
+
+    function paginationButtons(total) {
+      let totalPages = Math.ceil(total / rowsPerPage);
+      let btns = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        btns += `<button onclick="changePage(${i})">${i}</button>`;
+      }
+
+      document.getElementById("pagination").innerHTML = btns;
+    }
+
+    function changePage(p) {
+      currentPage = p;
+      loadLectures();
+    }
+
+    window.onload = loadLectures;
+
+  </script>
+
+</body>
+
+</html>

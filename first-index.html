@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BGI Login | Buddha Group of Institute</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #8a8787;
+      font-size: 16px;
+    }
+   button { 
+    width: 100%;
+  background: #a21414;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 12px;
+  box-shadow: 0 10px 10px rgba(240, 9, 148, 0.25);
+  margin-top: 10px;
+   }
+  </style>
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <main class="center-container">
+    <div class="login-card">
+
+      <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_uwh4Hw8pvr3lzgvmMpn1gKonbxSodVCZ74g57chhBOhlXyCbifqiOZULnLv6Unt8kE&usqp=CAU" alt="logo"/>
+      </div>
+
+      <h2>ई आर पी लॉगिन</h2>
+
+      <!-- ROLE SELECTION DROPDOWN -->
+      <select id="role">
+        <option value="">अपना रोल चुनें</option>
+        <option value="student">Student Login</option>
+        <option value="faculty">Faculty Login</option>
+        <option value="admin">Admin Login</option>
+      </select>
+
+      <button onclick="ERPLOGIN()" style="margin-top: 20px;">Produce</button>
+
+      <p class="forgot-line">
+        New Student? <a href="register.html">Register Here</a>
+      </p>
+
+      <a href="Forgot-Password.html" target="_blank">(पासवर्ड भूल गए)</a>
+
+    </div>
+  </main>
+
+<script>
+function ERPLOGIN() {
+    const role = document.getElementById('role').value;
+
+    if(role === ""){
+        alert("कृपया अपना रोल चुनें!");
+        return;
+    }
+
+    if(role === "student"){
+        window.location.href = "student-login.html";
+    }
+    if(role === "faculty"){
+        window.location.href = "faculty-login.html";
+    }
+    if(role === "admin"){
+        window.location.href = "admin-login.html";
+    }
+}
+</script>
+
+</body>
+</html>

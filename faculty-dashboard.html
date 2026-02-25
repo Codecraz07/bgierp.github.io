@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard - BGI ERP</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    /* Top Header */
+    .topbar {
+      background: #000;
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .topbar img {
+      height: 40px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: rgb(5, 5, 5);
+      height: 100vh;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      padding-top: 20px;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .sidebar a:hover {
+      background: #2b2a2a;
+    }
+
+
+      /* Main Content */
+    .main {
+        margin-left: 260px;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card-title {
+        background: #9b059b;
+        padding: 10px;
+        color: white;
+        font-size: 18px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    .row {
+        display: flex;
+        margin: 8px 0;
+    }
+    .col-label {
+        width: 150px;
+        font-weight: bold;
+    }
+
+    ul {
+        line-height: 1.8;
+    }
+
+    .important {
+        color: rgb(147, 4, 101);
+        font-weight: bold;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .link-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: black;
+    }
+
+    .link-box i {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Top Header -->
+  <header class="top-header" style="display:flex; justify-content: space-between; align-items:center; padding:10px 20px; background:#000; color:#fff;">
+    <div class="left-section" style="display:flex; align-items:center; gap:10px;">
+      <img src="Picsart_25-09-30_21-14-45-613.png" alt="BGI Logo" class="logo" style="height:40px;">
+      <span class="title" style="font-size:20px; font-weight:bold;">BGI ERP</span>
+    </div>
+
+     <!-- 🔹 Right Section -->
+  <div class="right-section" style="display:flex; align-items:center; gap:20px;">
+    <span id="welcomeMessage" style="font-size:14px;"></span>
+    
+    <!-- Modern Logout Button -->
+    <button onclick="logout()" class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+  </header>
+
+  <!-- Sidebar -->
+<div class="sidebar">
+    <a href="#">Dashboard</a>
+    <a href="#">Home</a>
+    <a href="Add-lecture-plane.html">Lecture Plane</a>
+    <a href="#">Student Attendance</a>
+    <a href="#">Self Attendance</a>
+    <a href="#">Activity Scheduale</a>
+    <a href="#">My Faculty Members</a>
+    <a href="#">Examinations</a>
+    <a href="#">Convocation</a>
+    <a href="#">Grievance</a>
+    <a href="#">Misc</a>
+    <a href="#">PHD</a>
+    <a href="#">Attendance</a>
+    <a href="#">Covid 19 Vaccination</a>
+</div>
+
+
+ 
+ <!-- Main Content -->
+<div class="main">
+
+    <!-- Welcome Card -->
+    <div class="card">
+        <div class="card-title">Welcome Faculty</div>
+
+        <div class="row"><div class="col-label">Date :</div> <div>18-11-2025</div></div>
+        <div class="row"><div class="col-label">User ID :</div> <div>462141875807</div></div>
+        <div class="row"><div class="col-label">Name :</div> <div>Dr.Ranjeet Rai</div></div>
+        <div class="row"><div class="col-label">University :</div>
+            <div>Buddha Institute Of Technology, Lucknow</div></div>
+        <div class="row"><div class="col-label">Session :</div> <div>2025-26</div></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  <script>
+    const facultyName = localStorage.getItem("currentFaculty");
+    const isLogged = localStorage.getItem("isFacultyLoggedIn");
+
+    if (isLogged !== "true") {
+      window.location.href = "faculty-login.html";
+    } else {
+      document.getElementById("facultyName").textContent = facultyName;
+      document.getElementById("facultyName2").textContent = facultyName;
+    }
+
+    function logout() {
+      localStorage.removeItem("isFacultyLoggedIn");
+      localStorage.removeItem("currentFaculty");
+      window.location.href = "faculty-login.html";
+    }
+  </script>
+</body>
+</html>

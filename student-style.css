@@ -1,0 +1,165 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+/* ✅ Fade-in animation for body */
+body {
+  animation: fadeInBody 1s ease-in;
+}
+
+/* ✅ Slide up cards when loading */
+.card {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* ✅ Fade-in animation */
+@keyframes fadeInBody {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ✅ Slide-up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;  
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ✅ Link box hover effect */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Style the buttons */
+.link-box {
+  display: inline-block;
+  padding: 15px 25px;
+  background: linear-gradient(120deg, #cc8b09, #d38705);
+  color: rgb(4, 51, 144);
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 200px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  text-decoration: none;
+}
+
+/* On hover */
+.link-box:hover {
+  background: linear-gradient(120deg, #df7656, #e65a2b);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* Animation class to reveal buttons */
+.link-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ✅ Smooth fade-in for welcome message */
+#welcomeMessage {
+  animation: fadeInWelcome 1s ease-in-out 0.5s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInWelcome {
+  to { opacity: 1; }
+}
+
+.top-header {
+  background-color: #a80202;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.right-section .dashboard-link {
+  color: rgb(136, 4, 4);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.right-section .dashboard-link:hover {
+  text-decoration: underline;
+}
+
+.main-title {
+  background-color: #f7f7f7;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-title h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.content-section {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.logout-btn {
+  background: #000000;
+  color: #fefdfd;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.logout-btn i {
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background: #f9f9f9;
+  color: #a51212;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+

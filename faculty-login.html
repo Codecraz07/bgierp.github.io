@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Login - BGI ERP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="center-container">
+    <div class="login-card">
+      <div class="logo">
+        <img src="Picsart_25-09-30_21-14-45-613.png" alt="BGI Logo">
+      </div>
+      <h2>Faculty Login</h2>
+
+      <form class="login-form" onsubmit="loginFaculty(event)">
+        <input type="email" id="email" placeholder="Email ID" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <p class="forgot-line">
+        New Faculty? <a href="faculty-register.html">Register Here</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function loginFaculty(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const allFaculty = JSON.parse(localStorage.getItem("allFaculty")) || [];
+      const faculty = allFaculty.find(f => f.email === email && f.password === password);
+
+      if (faculty) {
+        localStorage.setItem("isFacultyLoggedIn", "true");
+        localStorage.setItem("currentFaculty", faculty.name);
+        alert("Login successful!");
+        window.location.href = "faculty-dashboard.html";
+      } else {
+        alert("Invalid Email or Password!");
+      }
+    }
+  </script>
+</body>
+</html>
